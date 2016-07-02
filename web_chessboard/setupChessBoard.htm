@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>JoseBot Chess Board - Setup your chess board</title>
+  
+
+  <link rel="stylesheet" href="css/chessboard.css" />
+
+
+	<script src="js/json3.min.js"></script>
+	<script src="js/jquery-1.10.1.min.js"></script>
+	<script src="js/chessboard.js"></script>
+
+
+</head>
+
+<body>
+
+<p>
+<a href="/"><img src="./img/JoseBotLogo.png" width=50  height=50  align="absmiddle"></a>
+<font size=5 face="verdana" color="6C3365">
+<b>JoseBot Chess Board!</b>
+</font>
+<br>
+
+<br>
+<img src="./img/chip.jpg" width="19" height="19" align="absmiddle"> <a href="http://analysis.cpuchess.com"> Analysis This!</a>
+<br>
+
+</p>
+
+
+
+
+<!-- start example HTML --->
+	<script src="js/chess.min.js"></script>
+
+<table border=0>
+<tr>
+<td>
+<div id="myboard" style="width: 500px"></div>
+</td>
+
+<td>
+Castling... <br>
+Black:<input type="checkbox" name="castlingBOOO"  checked /> o-o-o
+<input type="checkbox" name="castlingBOO"  checked />o-o
+
+<br>
+White:<input type="checkbox" name="castlingWOOO"  checked /> o-o-o
+<input type="checkbox" name="castlingWOO"  checked />o-o
+<p>
+<br>
+
+Side to move...<br>
+<input type="radio" name="sidetomove" value="B" />Black<br>
+<p><br>
+<input type="radio" name="sidetomove" value="W" checked />White<br>
+
+</td>
+</tr>
+</table>
+
+<input type="button" id="startBtn" value="Start" />
+<input type="button" id="clearBtn" value="Clear" />
+<input type="button" id="getPositionBtn" value="Show position in console" />
+<!-- end example HTML --->
+<br>
+<textarea style='padding: 2px; font-size: 16px; color: #FFFFFF; background-color: #3499CC; border: solid 2px #272727;'
+cols="50" rows="1" id="fenstring" name="fenstring">This is FEN String... </textarea>
+
+
+<script>
+var boardcfg= {
+
+  draggable: true,
+  dropOffBoard: 'trash',
+  sparePieces: true
+
+};
+var myboard = ChessBoard('myboard', boardcfg);
+
+function clickGetPositionBtn() {
+  console.log("Current position as an Object:");
+  console.log(myboard.position());
+
+  console.log("Current position as a FEN string:");
+  console.log(myboard.fen());
+
+<!--- Get FEN String --->
+ var FenPositionsStr = myboard.fen();
+
+<!--- Side to Move --->
+var side2move = document.getElementsByName("sidetomove");
+ if (side2move[0].checked)
+ {
+	var theFENStr = FenPositionsStr + " b";
+ }
+ else{
+	var theFENStr = FenPositionsStr + " w";
+ }
+
+<!--- Build FEN String --->
+  document.getElementById("fenstring").value=theFENStr;
+
+}
+
+$('#getPositionBtn').on('click', clickGetPositionBtn);
+
+$('#startBtn').on('click', myboard.start);
+$('#clearBtn').on('click', myboard.clear);
+</script>
+
+</body>
+</html>
